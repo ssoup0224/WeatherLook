@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "414170479907",
+    "project_id": "weather-look-dd8f4",
+    "storage_bucket": "weather-look-dd8f4.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:414170479907:android:f681e8ccfc2de5256ce096",
+        "android_client_info": {
+          "package_name": "com.example.weather_look"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "414170479907-9ol8cv6kejv484s14kin4dp6vbv4dkhb.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyADCnjMWwDNu3_8-bRid-347WJiSI7Kvpk"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "414170479907-9ol8cv6kejv484s14kin4dp6vbv4dkhb.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
