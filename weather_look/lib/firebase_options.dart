@@ -26,10 +26,7 @@ class DefaultFirebaseOptions {
       case TargetPlatform.android:
         return android;
       case TargetPlatform.iOS:
-        throw UnsupportedError(
-          'DefaultFirebaseOptions have not been configured for ios - '
-          'you can reconfigure this by running the FlutterFire CLI again.',
-        );
+        return ios;
       case TargetPlatform.macOS:
         throw UnsupportedError(
           'DefaultFirebaseOptions have not been configured for macos - '
@@ -57,6 +54,19 @@ class DefaultFirebaseOptions {
     appId: '1:414170479907:android:f681e8ccfc2de5256ce096',
     messagingSenderId: '414170479907',
     projectId: 'weather-look-dd8f4',
+    databaseURL: 'https://weather-look-dd8f4-default-rtdb.firebaseio.com',
     storageBucket: 'weather-look-dd8f4.appspot.com',
+  );
+
+  static const FirebaseOptions ios = FirebaseOptions(
+    apiKey: 'AIzaSyAguk3V-HjHhjVfIHyJrjHGmyJcidS4SkQ',
+    appId: '1:414170479907:ios:a033dae98d6baf7b6ce096',
+    messagingSenderId: '414170479907',
+    projectId: 'weather-look-dd8f4',
+    databaseURL: 'https://weather-look-dd8f4-default-rtdb.firebaseio.com',
+    storageBucket: 'weather-look-dd8f4.appspot.com',
+    androidClientId: '414170479907-o2abojesbviqk2gkpg80kkilitaiik87.apps.googleusercontent.com',
+    iosClientId: '414170479907-dgqa6hlbel3mqu04v2hvq77cpajm834e.apps.googleusercontent.com',
+    iosBundleId: 'com.example.weatherLook',
   );
 }

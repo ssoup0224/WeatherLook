@@ -1,6 +1,7 @@
 {
   "project_info": {
     "project_number": "414170479907",
+    "firebase_url": "https://weather-look-dd8f4-default-rtdb.firebaseio.com",
     "project_id": "weather-look-dd8f4",
     "storage_bucket": "weather-look-dd8f4.appspot.com"
   },
@@ -14,7 +15,15 @@
       },
       "oauth_client": [
         {
-          "client_id": "414170479907-9ol8cv6kejv484s14kin4dp6vbv4dkhb.apps.googleusercontent.com",
+          "client_id": "414170479907-o2abojesbviqk2gkpg80kkilitaiik87.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.example.weather_look",
+            "certificate_hash": "132baa454baa1f85ed34d668e83006f29fcc84d3"
+          }
+        },
+        {
+          "client_id": "414170479907-6mqdfu9bvtmu2i04lbog853fjfb9kv78.apps.googleusercontent.com",
           "client_type": 3
         }
       ],
@@ -27,8 +36,15 @@
         "appinvite_service": {
           "other_platform_oauth_client": [
             {
-              "client_id": "414170479907-9ol8cv6kejv484s14kin4dp6vbv4dkhb.apps.googleusercontent.com",
+              "client_id": "414170479907-6mqdfu9bvtmu2i04lbog853fjfb9kv78.apps.googleusercontent.com",
               "client_type": 3
+            },
+            {
+              "client_id": "414170479907-dgqa6hlbel3mqu04v2hvq77cpajm834e.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "com.example.weatherLook"
+              }
             }
           ]
         }
