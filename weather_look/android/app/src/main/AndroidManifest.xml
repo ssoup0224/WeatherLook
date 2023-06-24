@@ -4,8 +4,8 @@
         android:label="weather_look"
         android:name="${applicationName}"
         android:icon="@mipmap/ic_launcher">
-
-        <!-- 네이버 로그인 설정 -->
+<!--
+        네이버 로그인 설정 
         <meta-data
            android:name="com.naver.sdk.clientId"
            android:value="@string/client_id" />
@@ -16,7 +16,7 @@
            android:name="com.naver.sdk.clientName"
            android:value="@string/client_name" />
 
-        <!-- 카카오 로그인 커스텀 URL 스킴 설정 -->
+        카카오 로그인 커스텀 URL 스킴 설정
         <activity 
             android:name="com.kakao.sdk.flutter.AuthCodeCustomTabsActivity"
             android:exported="true">
@@ -25,12 +25,11 @@
                 <category android:name="android.intent.category.DEFAULT" />
                 <category android:name="android.intent.category.BROWSABLE" />
 
-                <!-- "kakao${YOUR_NATIVE_APP_KEY}://oauth" 형식의 앱 실행 스킴 설정 -->
-                <!-- 카카오 로그인 Redirect URI -->
+                카카오 로그인 Redirect URI 
                 <data android:scheme="kakao66f8ad7afa5171a7d8923c9e6f94e6e1" android:host="oauth"/>
             </intent-filter>
         </activity>
-
+-->
         <activity
             android:name=".MainActivity"
             android:exported="true"
