@@ -1,148 +1,194 @@
-// ignore_for_file: avoid_print, depend_on_referenced_packages
-
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_naver_login/flutter_naver_login.dart';
-import 'package:google_sign_in/google_sign_in.dart';
-import 'package:kakao_flutter_sdk_user/kakao_flutter_sdk_user.dart';
-import 'package:weather_look/util/anonymous_login.dart';
-import 'package:weather_look/util/google_login.dart';
-import 'package:weather_look/util/kakao_login.dart';
-import 'package:weather_look/util/login_platform.dart';
-import 'package:weather_look/util/naver_login.dart';
-import 'package:weather_look/widget/login_button.dart';
+
+import '../util/auth.dart';
+import '../util/google_button.dart';
 
 class LoginPage extends StatefulWidget {
-  const LoginPage({super.key});
+  const LoginPage({Key? key}) : super(key: key);
 
   @override
-  State<LoginPage> createState() => _LoginPageState();
+  _LoginPageState createState() => _LoginPageState();
 }
 
 class _LoginPageState extends State<LoginPage> {
-  final _usernameController = TextEditingController();
-  final _passwordController = TextEditingController();
+  final TextEditingController _emailController = TextEditingController();
+  final TextEditingController _passwordController = TextEditingController();
 
-  LoginPlatform _loginPlatform = LoginPlatform.none;
-  final GoogleLogin _googleLogin = GoogleLogin();
-  final AnonymousLogin _anonymousLogin = AnonymousLogin();
-
-  void signInWithGoogle() async {
-    await _googleLogin.signInWithGoogle(updateLoginPlatform);
+  @override
+  void dispose() {
+    _emailController.dispose();
+    _passwordController.dispose();
+    super.dispose();
   }
 
-  void signInWithKakao() async {
-    await KakaoLogin.signInWithKakao(updateLoginPlatform);
-  }
+  Future<void> _signUp() async {
+    final String email = _emailController.text.trim();
+    final String password = _passwordController.text.trim();
 
-  void signInWithNaver() async {
-    await NaverLogin.signInWithNaver(updateLoginPlatform);
-  }
-
-  void signInAnonymously() async {
-    await _anonymousLogin.signInAnonymously(updateLoginPlatform);
-  }
-
-  void updateLoginPlatform(LoginPlatform platform) {
-    setState(() {
-      _loginPlatform = platform;
-    });
-  }
-
-  void signOut() async {
-    switch (_loginPlatform) {
-      case LoginPlatform.google:
-        await GoogleSignIn().signOut();
-        break;
-      case LoginPlatform.kakao:
-        await UserApi.instance.logout();
-        break;
-      case LoginPlatform.naver:
-        await FlutterNaverLogin.logOut();
-        break;
-      case LoginPlatform.anonymous:
-        await _anonymousLogin.signOut(updateLoginPlatform);
-        break;
-      case LoginPlatform.none:
-        break;
+    if (email.isEmpty || password.isEmpty) {
+      ScaffoldMessenger.of(context).showSnackBar(
+        const SnackBar(
+          content: Text('Please enter email and password.'),
+        ),
+      );
+      return;
     }
 
-    setState(() {
-      _loginPlatform = LoginPlatform.none;
-    });
+    User? user = await Authentication.signUpWithEmail(
+      context: context,
+      email: email,
+      password: password,
+    );
+
+    if (user != null) {
+      // Registration successful, navigate to next screen
+      Navigator.pushNamed(context, '/navigation');
+    }
+  }
+
+  Future<void> _signIn() async {
+    final String email = _emailController.text.trim();
+    final String password = _passwordController.text.trim();
+
+    if (email.isEmpty || password.isEmpty) {
+      ScaffoldMessenger.of(context).showSnackBar(
+        const SnackBar(
+          content: Text('Please enter email and password.'),
+        ),
+      );
+      return;
+    }
+
+    User? user = await Authentication.signInWithEmail(
+      context: context,
+      email: email,
+      password: password,
+    );
+
+    if (user != null) {
+      // Login successful, navigate to next screen
+      Navigator.pushNamed(context, '/navigation');
+    }
   }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: Column(
-        mainAxisAlignment: MainAxisAlignment.center,
-        children: [
-          TextField(
-            controller: _usernameController,
-            decoration: const InputDecoration(
-              filled: true,
-              labelText: 'Username',
+      backgroundColor: Colors.white,
+      body: Center(
+        child: Column(
+          children: [
+            SizedBox(
+              height: (MediaQuery.of(context).size.height) / 6.4,
             ),
-          ),
-          // spacer
-          const SizedBox(height: 12.0),
-          // [Password]
-          TextField(
-            controller: _passwordController,
-            decoration: const InputDecoration(
-              filled: true,
-              labelText: 'Password',
+            SizedBox(
+              width: 100,
+              height: 100,
+              child: Image.asset(
+                'asset/image/weatherlook_logo.png',
+              ),
             ),
-            obscureText: true,
-          ),
-          const SizedBox(
-            height: 10,
-          ),
-          Center(
-              child: _loginPlatform != LoginPlatform.none
-                  ? _logoutButton()
-                  : Row(
-                      mainAxisAlignment: MainAxisAlignment.center,
-                      children: [
-                        _loginButton(
-                          'google_logo',
-                          signInWithGoogle,
-                        ),
-                        _loginButton(
-                          'kakao_logo',
-                          signInWithKakao,
-                        ),
-                        _loginButton(
-                          'naver_logo',
-                          signInWithNaver,
-                        ),
-                        _loginButton(
-                          'anonymous_logo',
-                          signInAnonymously,
-                        ),
-                      ],
-                    )),
-        ],
-      ),
-    );
-  }
-
-  Widget _loginButton(String path, VoidCallback onTap) {
-    return LoginButton(
-      path: path,
-      onTap: onTap,
-    );
-  }
-
-  Widget _logoutButton() {
-    return ElevatedButton(
-      onPressed: signOut,
-      style: ButtonStyle(
-        backgroundColor: MaterialStateProperty.all(
-          const Color(0xff0165E1),
+            const SizedBox(height: 100),
+            SizedBox(
+              width: 270,
+              height: 44,
+              child: TextField(
+                controller: _emailController,
+                decoration: InputDecoration(
+                  contentPadding: const EdgeInsets.symmetric(horizontal: 18),
+                  filled: true,
+                  fillColor: const Color(0xffE1ECF7),
+                  border: OutlineInputBorder(
+                    borderRadius: BorderRadius.circular(30),
+                    borderSide: BorderSide.none,
+                  ),
+                  hintText: '이메일',
+                  hintStyle: const TextStyle(fontSize: 16),
+                ),
+              ),
+            ),
+            const SizedBox(height: 13),
+            SizedBox(
+              width: 270,
+              height: 44,
+              child: TextField(
+                controller: _passwordController,
+                decoration: InputDecoration(
+                  contentPadding: const EdgeInsets.symmetric(horizontal: 18),
+                  filled: true,
+                  fillColor: const Color(0xffE1ECF7),
+                  border: OutlineInputBorder(
+                    borderRadius: BorderRadius.circular(30),
+                    borderSide: BorderSide.none,
+                  ),
+                  hintText: '비밀번호',
+                  hintStyle: const TextStyle(fontSize: 16),
+                ),
+                obscureText: true,
+              ),
+            ),
+            const SizedBox(height: 26),
+            TextButton(
+              onPressed: () {},
+              child: const Text(
+                '아이디/비밀번호 찾기 >',
+                style: TextStyle(
+                  fontSize: 12,
+                  color: Color(0xff797979),
+                ),
+              ),
+            ),
+            const SizedBox(height: 37),
+            SizedBox(
+              width: 100,
+              height: 40,
+              child: ElevatedButton(
+                style: ElevatedButton.styleFrom(
+                  backgroundColor: const Color(0xFF86B6E1),
+                  shape: RoundedRectangleBorder(
+                    borderRadius: BorderRadius.circular(24),
+                  ),
+                ),
+                onPressed: _signIn,
+                child: const Text(
+                  '로그인',
+                  style: TextStyle(
+                    fontSize: 16,
+                  ),
+                ),
+              ),
+            ),
+            TextButton(
+              onPressed: () {
+                Navigator.pushNamed(context, '/signup');
+              },
+              child: const Text(
+                '회원가입',
+                style: TextStyle(
+                  fontSize: 12,
+                  color: Color(0xff797979),
+                  decoration: TextDecoration.underline,
+                ),
+              ),
+            ),
+            const SizedBox(height: 33),
+            FutureBuilder(
+              future: Authentication.initializeFirebase(context: context),
+              builder: (context, snapshot) {
+                if (snapshot.hasError) {
+                  return const Text('Error initializing Firebase');
+                } else if (snapshot.connectionState == ConnectionState.done) {
+                  return const GoogleSignInButton();
+                }
+                return const CircularProgressIndicator(
+                  color: Color(0xffff0c4c8a),
+                );
+              },
+            ),
+          ],
         ),
       ),
-      child: const Text('로그아웃'),
     );
   }
 }
