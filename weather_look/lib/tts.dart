@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_tts/flutter_tts.dart';
+import 'package:perfect_volume_control/perfect_volume_control.dart';
 import 'package:weather_look/util/chatGpt.dart';
 
 class TextToSpeech extends StatefulWidget {
@@ -17,8 +18,39 @@ class _TextToSpeechState extends State<TextToSpeech> {
 
   final FlutterTts tts = FlutterTts();
 
+  double currentvol = 0.7;
+
   @override
   void initState() {
+    Future.delayed(Duration.zero, () async {
+      currentvol = await PerfectVolumeControl.getVolume();
+      //get current volume
+
+      setState(() {
+        //refresh UI
+      });
+    });
+
+    PerfectVolumeControl.stream.listen((volume) {
+      //volume button is pressed,
+      // this listener will be triggeret 3 times at one button press
+
+      if (volume != currentvol) {
+        //only execute button type check once time
+        if (volume > currentvol) {
+          //if new volume is greater, then it up button
+          tts.stop();
+        } else {
+          //else it is down button
+          tts.stop();
+        }
+      }
+
+      setState(() {
+        currentvol = volume;
+      });
+    });
+
     super.initState();
     // 언어 설정
     tts.setLanguage("ko-KR");
