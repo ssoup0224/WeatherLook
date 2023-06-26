@@ -51,6 +51,19 @@ class Authentication {
 
         user = userCredential.user;
 
+        if (userCredential.additionalUserInfo!.isNewUser) {
+          Navigator.pushNamed(context, '/gender');
+        } else {
+          // ignore: use_build_context_synchronously
+          Navigator.of(context).push(
+            MaterialPageRoute(
+              builder: (context) => UserInfoScreen(
+                user: user as User,
+              ),
+            ),
+          );
+        }
+
         // Save user information in Firestore
         await saveGoogleUserInfo(user!);
       } on FirebaseAuthException catch (e) {
