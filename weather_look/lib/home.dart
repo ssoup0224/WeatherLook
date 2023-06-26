@@ -4,18 +4,13 @@ import 'package:weather_look/login.dart';
 import 'package:weather_look/util/auth.dart';
 
 class UserInfoScreen extends StatefulWidget {
-  const UserInfoScreen({Key? key, required User user})
-      : _user = user,
-        super(key: key);
-
-  final User _user;
+  const UserInfoScreen({Key? key, required User user}) : super(key: key);
 
   @override
   _UserInfoScreenState createState() => _UserInfoScreenState();
 }
 
 class _UserInfoScreenState extends State<UserInfoScreen> {
-  late User _user;
   bool _isSigningOut = false;
 
   Route _routeToSignInScreen() {
@@ -40,8 +35,6 @@ class _UserInfoScreenState extends State<UserInfoScreen> {
 
   @override
   void initState() {
-    _user = widget._user;
-
     super.initState();
   }
 
