@@ -11,8 +11,6 @@ class TextToSpeech extends StatefulWidget {
 }
 
 class _TextToSpeechState extends State<TextToSpeech> {
-  final _blackColor = const Color(0xFF1F2123);
-
   late Future<String> generatedTextFuture;
   late String generatedText = '';
 
@@ -72,6 +70,7 @@ class _TextToSpeechState extends State<TextToSpeech> {
     generatedTextFuture.then((data) {
       setState(() {
         generatedText = data;
+        tts.speak(generatedText);
       });
     });
   }
