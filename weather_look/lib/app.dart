@@ -1,9 +1,10 @@
 import 'package:flutter/material.dart';
-import 'package:weather_look/gender.dart';
-import 'package:weather_look/login.dart';
-import 'package:weather_look/signup.dart';
-import 'package:weather_look/style.dart';
-import 'package:weather_look/tts.dart';
+import 'package:weather_look/screens/gender.dart';
+import 'package:weather_look/screens/login.dart';
+import 'package:weather_look/screens/signup.dart';
+import 'package:weather_look/screens/style.dart';
+import 'package:weather_look/screens/tts.dart';
+import 'package:weather_look/screens/weather.dart';
 
 class WeatherLook extends StatelessWidget {
   const WeatherLook({super.key});
@@ -12,13 +13,14 @@ class WeatherLook extends StatelessWidget {
   Widget build(BuildContext context) {
     return MaterialApp(
       title: 'Weather Look',
-      initialRoute: '/',
+      initialRoute: '/weather',
       routes: {
         '/': (BuildContext context) => const LoginPage(),
         '/signup': (BuildContext context) => const SignUpPage(),
         '/gender': (BuildContext context) => const GenderSelectPage(),
         '/style': (BuildContext context) => const StyleSelectPage(),
-        '/tts': (BuildContext context) => TextToSpeech(),
+        '/tts': (BuildContext context) => const TextToSpeech(),
+        '/weather': (BuildContext context) => const WeatherPage(),
       },
     );
   }
