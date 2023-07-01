@@ -1,7 +1,7 @@
 import 'dart:convert';
 import 'package:http/http.dart' as http;
 
-const apiKey = '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';
+const apiKey = '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';
 const apiUrl = 'https://api.openai.com/v1/completions';
 
 class ChatGpt {
