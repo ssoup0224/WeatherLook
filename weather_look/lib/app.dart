@@ -13,7 +13,7 @@ class WeatherLook extends StatelessWidget {
   Widget build(BuildContext context) {
     return MaterialApp(
       title: 'Weather Look',
-      initialRoute: '/weather',
+      initialRoute: '/tts',
       routes: {
         '/': (BuildContext context) => const LoginPage(),
         '/signup': (BuildContext context) => const SignUpPage(),
